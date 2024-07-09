@@ -55,7 +55,8 @@ npm install &>> $LOGFILE
 
 VALIDATE $? "Installing Depencies "
 
-cp c/Users/Lenovo/devops/daws76/repo/projectrobo-shell/catlouge.service  /etc/systemd/system/catalogue.service
+cp c/Users/Lenovo/devops/daws76/repo/projectrobo-shell/catlouge.service  /etc/systemd/system/catalogue.service &>> $LOGFILE
+
 
 VALIDATE $? "Copying Catlogue servises "
 
@@ -72,7 +73,13 @@ systemctl start catalogue
 
 VALIDATE $? "Starting Catalouge "
 
+cp c/Users/Lenovo/devops/daws76/repo/projectrobo-shell/mongodb.repo  /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
+
+VALIDATE $? "Copying Mongodb repo "
 
 dnf install mongodb-org-shell -y  &>> $LOGFILE
+VALIDATE $? "Starting Mongodb repo "
 
-mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js &>> $LOGFILE
+mongo --host mongodb.chandulearn.online </app/schema/catalogue.js &>> $LOGFILE
+VALIDATE $? "Loading data in Mongodb server "
+
