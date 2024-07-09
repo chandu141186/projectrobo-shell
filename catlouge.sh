@@ -55,10 +55,10 @@ npm install &>> $LOGFILE
 
 VALIDATE $? "Installing Depencies "
 
-cp c/Users/Lenovo/devops/daws76/repo/projectrobo-shell/catlouge.service  /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp /home/centos/projectrobo-shell/catlouge.service  /etc/systemd/system/catalogue.service &>> $LOGFILE
 
 
-VALIDATE $? "Copying Catlogue servises "
+VALIDATE $? "Copying Catlogue services "
 
 
 systemctl daemon-reload
