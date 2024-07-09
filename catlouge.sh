@@ -36,8 +36,17 @@ VALIDATE $? "enabling Nodjs18 "
 dnf install nodejs -y  &>> $LOGFILE
 VALIDATE $? "Installing DNodejs "
 
-useradd roboshop
-mkdir /app
+id roboshop #if roboshop user does not exist, then it is failure
+if [ $? -ne 0 ]
+then
+    useradd roboshop
+    VALIDATE $? "roboshop user creation"
+else
+    echo -e "roboshop user already exist $Y SKIPPING $N"
+fi
+
+mkdir -p /app
+
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip  &>> $LOGFILE
 
@@ -73,7 +82,7 @@ systemctl start catalogue
 
 VALIDATE $? "Starting Catalouge "
 
-cp c/Users/Lenovo/devops/daws76/repo/projectrobo-shell/mongodb.repo  /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
+cp /home/centos/projectrobo-shell/mongodb.repo  /etc/yum.repos.d/mongo.repo  &>> $LOGFILE
 
 VALIDATE $? "Copying Mongodb repo "
 
