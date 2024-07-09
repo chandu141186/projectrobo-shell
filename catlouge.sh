@@ -41,27 +41,38 @@ mkdir /app
 
 curl -o /tmp/catalogue.zip https://roboshop-builds.s3.amazonaws.com/catalogue.zip  &>> $LOGFILE
 
-VALIDATE $? "Copying catloguge application from url "
+VALIDATE $? "Downloading catloguge application from url "
 
 cd /app 
+
 unzip /tmp/catalogue.zip  &>> $LOGFILE
 
 VALIDATE $? "Unzipping Catalouge application"
 
 cd /app
+
 npm install &>> $LOGFILE
-VALIDATE $? "Installing Applcation "
+
+VALIDATE $? "Installing Depencies "
+
+cp catlouge.service /etc/systemd/system/catalogue.service
+
+VALIDATE $? "Copying Catlogue servises "
 
 
 systemctl daemon-reload
+
 VALIDATE $? "Reloding app "
 
 systemctl enable catalogue
+
 VALIDATE $? "Enabling Catalouge "
 
 systemctl start catalogue
+
 VALIDATE $? "Starting Catalouge "
 
 
 dnf install mongodb-org-shell -y  &>> $LOGFILE
+
 mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js &>> $LOGFILE
