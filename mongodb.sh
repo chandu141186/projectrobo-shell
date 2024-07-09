@@ -43,7 +43,7 @@ fi # fi means reverse of if, indicating condition end
   systemctl start mongod
     VALIDATE $? "Starting   MongoDB "
 
-  sed -i '127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+  sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
       VALIDATE $? " MongoDB ip mod for pubilic access"
 
   systemctl restart mongod
