@@ -6,7 +6,7 @@ N="\e[0m"
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-
+MANGODB_HOST= mongodb.chandulearn.online
 echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
@@ -75,7 +75,7 @@ systemctl daemon-reload
 
 VALIDATE $? "Reloding app "
 
-systemctl enable catalogue
+systemctl enable catalogue &>> $LOGFILE
 
 VALIDATE $? "Enabling Catalouge "
 
@@ -90,6 +90,6 @@ VALIDATE $? "Copying Mongodb repo "
 dnf install mongodb-org-shell -y  &>> $LOGFILE
 VALIDATE $? "Starting Mongodb repo "
 
-mongo --host mongodb.chandulearn.online </app/schema/catalogue.js &>> $LOGFILE
+mongo --host $MANGODB_HOST </app/schema/catalogue.js &>> $LOGFILE
 VALIDATE $? "Loading data in Mongodb server "
 
