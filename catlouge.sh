@@ -55,7 +55,7 @@ npm install &>> $LOGFILE
 
 VALIDATE $? "Installing Depencies "
 
-cp catlouge.service /etc/systemd/system/catalogue.service
+cp c/Users/Lenovo/devops/daws76/repo/projectrobo-shell/catlouge.service  /etc/systemd/system/catalogue.service
 
 VALIDATE $? "Copying Catlogue servises "
 
