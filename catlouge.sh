@@ -4,9 +4,10 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+MONGODB_HOST=mongodb.chandulearn.online
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-MONGODB_HOST= mongodb.chandulearn.online
+
 echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
