@@ -6,7 +6,7 @@ N="\e[0m"
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-MANGODB_HOST= mongodb.chandulearn.online
+MONGODB_HOST= mongodb.chandulearn.online
 echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
@@ -90,6 +90,6 @@ VALIDATE $? "Copying Mongodb repo "
 dnf install mongodb-org-shell -y  &>> $LOGFILE
 VALIDATE $? "Starting Mongodb repo "
 
-mongo --host $MANGODB_HOST </app/schema/catalogue.js &>> $LOGFILE
+mongo --host $MONGODB_HOST </app/schema/catalogue.js &>> $LOGFILE
 VALIDATE $? "Loading data in Mongodb server "
 
