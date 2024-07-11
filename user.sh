@@ -86,7 +86,7 @@ systemctl start user &>> $LOGFILE
 
 VALIDATE $? "Starting user"
 
-cp /home/centos/projectrobo-shell/mongo.repo /etc/yum.repos.d/mongo.repo
+cp /home/centos/projectrobo-shell/mongodb.repo /etc/yum.repos.d/mongo.repo
 
 VALIDATE $? "copying mongodb repo"
 
