@@ -70,7 +70,7 @@ npm install  &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-cp /home/centos/projrctrobo-shell/user.service /etc/systemd/system/user.service
+cp /home/centos/projectrobo-shell/user.service /etc/systemd/system/user.service
 
 VALIDATE $? "Copying user service file"
 
