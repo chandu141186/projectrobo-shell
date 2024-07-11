@@ -6,7 +6,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
+MONGDB_HOST=mongodb.chandulearn.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
@@ -56,33 +56,44 @@ mkdir -p /app
 
 VALIDATE $? "creating app directory"
 
-curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
+curl -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip  &>> $LOGFILE
 
-VALIDATE $? "Downloading cart application"
+VALIDATE $? "Downloading user application"
 
 cd /app 
 
-unzip -o /tmp/cart.zip  &>> $LOGFILE
+unzip -o /tmp/user.zip  &>> $LOGFILE
 
-VALIDATE $? "unzipping cart"
+VALIDATE $? "unzipping user"
 
 npm install  &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-# use absolute, because cart.service exists there
-cp /home/centos/projectrobo-shell/cart.service /etc/systemd/system/cart.service &>> $LOGFILE
+cp /home/centos/projrctrobo-shell/user.service /etc/systemd/system/user.service
 
-VALIDATE $? "Copying cart service file"
+VALIDATE $? "Copying user service file"
 
 systemctl daemon-reload &>> $LOGFILE
 
-VALIDATE $? "cart daemon reload"
+VALIDATE $? "user daemon reload"
 
-systemctl enable cart &>> $LOGFILE
+systemctl enable user &>> $LOGFILE
 
-VALIDATE $? "Enable cart"
+VALIDATE $? "Enable user"
 
-systemctl start cart &>> $LOGFILE
+systemctl start user &>> $LOGFILE
 
-VALIDATE $? "Starting cart"
+VALIDATE $? "Starting user"
+
+cp /home/centos/projectrobo-shell/mongo.repo /etc/yum.repos.d/mongo.repo
+
+VALIDATE $? "copying mongodb repo"
+
+dnf install mongodb-org-shell -y &>> $LOGFILE
+
+VALIDATE $? "Installing MongoDB client"
+
+mongo --host $MONGDB_HOST </app/schema/user.js &>> $LOGFILE
+
+VALIDATE $? "Loading user data into MongoDB"

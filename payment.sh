@@ -6,7 +6,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
+MONGDB_HOST=mongodb.chandulearn.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
@@ -31,17 +31,7 @@ else
     echo "You are root user"
 fi # fi means reverse of if, indicating condition end
 
-dnf module disable nodejs -y &>> $LOGFILE
-
-VALIDATE $? "Disabling current NodeJS"
-
-dnf module enable nodejs:18 -y  &>> $LOGFILE
-
-VALIDATE $? "Enabling NodeJS:18"
-
-dnf install nodejs -y  &>> $LOGFILE
-
-VALIDATE $? "Installing NodeJS:18"
+dnf install python36 gcc python3-devel -y &>> $LOGFILE
 
 id roboshop #if roboshop user does not exist, then it is failure
 if [ $? -ne 0 ]
@@ -52,37 +42,36 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>> $LOGFILE
 
 VALIDATE $? "creating app directory"
 
-curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip  &>> $LOGFILE
+curl -L -o /tmp/payment.zip https://roboshop-builds.s3.amazonaws.com/payment.zip &>> $LOGFILE
 
-VALIDATE $? "Downloading cart application"
+VALIDATE $? "Downloading payment"
 
 cd /app 
 
-unzip -o /tmp/cart.zip  &>> $LOGFILE
+unzip -o /tmp/payment.zip &>> $LOGFILE
 
-VALIDATE $? "unzipping cart"
+VALIDATE $? "unzipping payment"
 
-npm install  &>> $LOGFILE
+pip3.6 install -r requirements.txt &>> $LOGFILE
 
-VALIDATE $? "Installing dependencies"
+VALIDATE $? "Installing Dependencies"
 
-# use absolute, because cart.service exists there
-cp /home/centos/projectrobo-shell/cart.service /etc/systemd/system/cart.service &>> $LOGFILE
+cp /home/centos/projecrobo-shell/payment.service /etc/systemd/system/payment.service &>> $LOGFILE
 
-VALIDATE $? "Copying cart service file"
+VALIDATE $? "Copying payment service"
 
 systemctl daemon-reload &>> $LOGFILE
 
-VALIDATE $? "cart daemon reload"
+VALIDATE $? "daemon reaload"
 
-systemctl enable cart &>> $LOGFILE
+systemctl enable payment  &>> $LOGFILE
 
-VALIDATE $? "Enable cart"
+VALIDATE $? "Enable payment"
 
-systemctl start cart &>> $LOGFILE
+systemctl start payment &>> $LOGFILE
 
-VALIDATE $? "Starting cart"
+VALIDATE $? "Start payment"
