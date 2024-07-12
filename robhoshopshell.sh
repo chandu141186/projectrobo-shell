@@ -2,7 +2,7 @@
 
 AMI=ami-0b4f379183e5706b9 
 SG_ID=sg-04e8a790706df00aa
-INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catlouge" "user" "cart" "shipping" "payment" "dispatch" "web" )
+INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web" )
 ZONE_ID=Z06286322TWN251SZBYW9
 DOMAIN_NAME=chandulearn.online
 
@@ -23,7 +23,7 @@ do
   {
     "Comment": "Creating a record set for cognito endpoint"
     ,"Changes": [{
-      "Action"              : "CREATE"
+      "Action"              : "UPSERT"
       ,"ResourceRecordSet"  : {
         "Name"              : "'$i'.'$DOMAIN_NAME'"
         ,"Type"             : "A"
