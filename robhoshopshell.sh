@@ -19,9 +19,9 @@ do
 
   if [ $i == "web" ]
   then
-    IP_ADDRESS=public
+    IP_ADDRESS=public_ip
   else
-       IP_ADDRESS=private
+       IP_ADDRESS=private_ip
   fi  
      
    aws route53 change-resource-record-sets \
