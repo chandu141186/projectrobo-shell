@@ -61,9 +61,9 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-rabbitmqctl add_user roboshop roboshop123 &>> $LOGFILE
+#rabbitmqctl add_user roboshop roboshop123 &>> $LOGFILE
 
-VALIDATE $? "creating user"
+#VALIDATE $? "creating user"
 
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $LOGFILE
 
